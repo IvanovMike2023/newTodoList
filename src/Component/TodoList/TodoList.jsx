@@ -21,7 +21,7 @@ const dispatch = useAppDispatch()
     const addTodoList = (e) =>  APITodolist.setTodoList(e).then(res => {
         mas = res.data
         //setmas(mas)
-        console.log(res.data)
+        //console.log(res.data)
     })
     const onChangeHandler = (e) => {
         settitle(e.target.value)
