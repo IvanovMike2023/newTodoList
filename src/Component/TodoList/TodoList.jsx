@@ -20,7 +20,7 @@ const dispatch = useAppDispatch()
     console.log(todolists)
     const addTodoList = (e) =>  APITodolist.setTodoList(e).then(res => {
         mas = res.data
-        //setmas(mas)cascascsc
+        //setmas(mas)cas cascscascsc
 //dcasascsacsqwdqwdwqdcascsaccsacs
         //console.log(res.data)
     })
