@@ -9,9 +9,10 @@ import {addTodoListTC, getTodolistTC, TodolistDomainType} from "./todolist-reduc
 import {useSelector, UseSelector} from "react-redux";
 import {AddItemForm} from "../AddItem/AddItem";
 import {getTaskTC, TasksStateType} from "../Task/task-reducer";
+import React from "react";
 
 
-export const TodoLists = () => {
+export const TodoLists : React.FC= () => {
 
     const dispatch = useAppDispatch()
     const todolists = useAppSelector((state) => state.todolists)
@@ -33,7 +34,7 @@ export const TodoLists = () => {
                 let allTodolistTasks = tasks[el.id]
                 console.log(allTodolistTasks)
                 return <Grid item key={el.id}>
-                        <Todolist title={el.title} todolist={el} tasks={allTodolistTasks}/>
+                        <Todolist title={el.title}  todolist={el} tasks={allTodolistTasks}/>
 
                 </Grid>
             })
