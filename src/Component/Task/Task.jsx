@@ -1,16 +1,31 @@
 import React from "react";
-import {Grid, Paper, TextField} from "@mui/material";
-import {TodolistDomainType} from "../TodoList/todolist-reducer";
+import {Grid, IconButton, Paper, TextField} from "@mui/material";
+import {deleteTodolistTC, TodolistDomainType} from "../TodoList/todolist-reducer";
+import {AddItemForm} from "../AddItem/AddItem";
+import DeleteIcon from '@mui/icons-material/Delete';
+import {useAppDispatch} from "../../store";
+import {useDispatch} from "react-redux";
+
 type TaskType ={
     title: string,
     todolist: TodolistDomainType
 }
 export const Task=React.memo(({...props}:TaskType)=>{
-
-    //console.log(props)
-    return         <Grid item >
+    const dispatch = useDispatch()
+    const addTodoList=()=>{
+}
+const deleteTodoList=()=>{
+    dispatch(deleteTodolistTC(props.todolist.id))
+}
+    return         <Grid item id={props.todolist.id}>
             <Paper style={{padding: '10px'}}>
-        <TextField id="outlined-basic" label="Outlined"  variant="outlined" value={props.title} />
+               <Grid container>
+                <h3>{props.title}</h3>
+                <IconButton aria-label="delete">
+                <DeleteIcon onClick={deleteTodoList} />
+            </IconButton>
+               </Grid>
+                <AddItemForm addItem={addTodoList} />
             </Paper>
         </Grid>
 

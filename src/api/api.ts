@@ -12,6 +12,10 @@ export const APITodolist = {
     setTodoList(title:string) {
         return instance.post<ResponseType<{ item: TodolistType }>, AxiosResponse<ResponseType<{ item: TodolistType }>>, { title: string }>('todo-lists', {title});
 
+    },
+    deleteTodoList(id:string) {
+        return instance.delete<ResponseType>(`/todo-lists/${id}`);
+
     }
 }
 export type TodolistType={
@@ -25,4 +29,9 @@ export type ResponseType<D = {}> = {
     messages: Array<string>
     fieldsErrors: Array<string>
     data: D
+}
+type ResponseDelete={
+    resultCode: number
+    messages: Array<string>
+    data: {}
 }
