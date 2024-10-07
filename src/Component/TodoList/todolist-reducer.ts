@@ -5,8 +5,8 @@ import {Dispatch} from "redux";
 let initialState: Array<TodolistDomainType> = []
 export const todolistReducer = (state: Array<TodolistDomainType> = initialState, actions: ActionsType) => {
     switch (actions.type) {
-        case 'SET-TODOLIST':
-            return actions.todolist.map(tl => ({...tl})) //actions.todolist.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
+        case 'GET-TODOLIST':
+            return actions.todolist.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
         case 'ADD-TODOLIST':
             return [...state, {...actions.todolist}]//actions.todolist.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
         case 'DELETE-TODOLIST':
@@ -15,13 +15,14 @@ export const todolistReducer = (state: Array<TodolistDomainType> = initialState,
             return state
     }
 }
-export const setTodolist = (todolist: TodolistType[]) => ({type: 'SET-TODOLIST', todolist} as const)
+export const getTodolist = (todolist: TodolistType[]) => ({type: 'GET-TODOLIST', todolist} as const)
 export const addTodolist = (todolist: TodolistType) => ({type: 'ADD-TODOLIST', todolist} as const)
+export const addTask = (id: string,title:string) => ({type: 'ADD-TASK', title,id} as const)
 export const deleteTodolist = (id: string) => ({type: 'DELETE-TODOLIST', id} as const)
-export const setTodolistTC = () => {
-    return (dispatch: Dispatch) => {
+export const getTodolistTC = () => {
+    return (dispatch: ThunkDispatch) => {
         APITodolist.getTodoList().then(res => {
-            dispatch(setTodolist(res.data))
+            dispatch(getTodolist(res.data))
         })
     }
 }
@@ -39,10 +40,14 @@ APITodolist.deleteTodoList(id).then(res=>{
     deleteTodolist(id)
 })
     }
-
 }
+
 type ActionsType =
-    | ReturnType<typeof setTodolist>
+    | ReturnType<typeof getTodolist>
     | ReturnType<typeof addTodolist>
     | ReturnType<typeof deleteTodolist>
+    | ReturnType<typeof addTask>
+
 export type TodolistDomainType = TodolistType
+
+type ThunkDispatch = Dispatch<ActionsType >

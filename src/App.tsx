@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {TodoList} from "./Component/TodoList/TodoList";
+import {TodoLists} from "./Component/TodoList/TodoLists";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
       </header>
 
-        <TodoList/>
+        <TodoLists/>
 
     </div>
   );
