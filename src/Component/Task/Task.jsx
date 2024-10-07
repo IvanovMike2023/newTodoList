@@ -3,7 +3,6 @@ import {Grid, IconButton, Paper, TextField} from "@mui/material";
 import {deleteTodolistTC, TodolistDomainType} from "../TodoList/todolist-reducer";
 import {AddItemForm} from "../AddItem/AddItem";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useAppDispatch} from "../../store";
 import {useDispatch} from "react-redux";
 
 type TaskType ={
