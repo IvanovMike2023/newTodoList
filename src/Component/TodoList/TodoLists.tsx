@@ -1,30 +1,26 @@
-import react, {useCallback, useEffect, useState} from 'react'
-import s from './TodoList.module.css'
-import {Button, Grid, Paper, TextField} from "@mui/material";
-import axios from "axios";
+import React, {useCallback, useEffect} from 'react'
+import {Grid} from "@mui/material";
 import {Todolist} from "./Todolist";
-import {APITodolist} from "../../api/api";
 import {useAppDispatch, useAppSelector} from "../../store";
-import {addTodoListTC, getTodolistTC, TodolistDomainType} from "./todolist-reducer";
-import {useSelector, UseSelector} from "react-redux";
+import {addTodoListTC, deleteTodolistTC, getTodolistTC} from "./todolist-reducer";
 import {AddItemForm} from "../AddItem/AddItem";
-import {getTaskTC, TasksStateType} from "../Task/task-reducer";
-import React from "react";
 
 
 export const TodoLists : React.FC= () => {
 
     const dispatch = useAppDispatch()
-    const todolists = useAppSelector((state) => state.todolists)
+    const todolists = useAppSelector(state=>state.todolists)
     const tasks = useAppSelector(state => state.tasks)
-
     useEffect(() => {
         dispatch(getTodolistTC())
     }, [])
     const addTodoList = useCallback((title: string) => {
         dispatch(addTodoListTC(title))
-        dispatch(getTodolistTC())
     }, [dispatch])
+    const removeTodolist = useCallback(function (id: string) {
+        const thunk = deleteTodolistTC(id)
+        dispatch(thunk)
+    }, [])
     return <>
         <Grid container style={{padding: '20px'}}>
        <AddItemForm addItem={addTodoList} />
@@ -32,10 +28,8 @@ export const TodoLists : React.FC= () => {
        <Grid container spacing={3}>
             {todolists.map(el => {
                 let allTodolistTasks = tasks[el.id]
-                console.log(allTodolistTasks)
                 return <Grid item key={el.id}>
-                        <Todolist title={el.title}  todolist={el} tasks={allTodolistTasks}/>
-
+                        <Todolist removeTodolist={removeTodolist} title={el.title}  todolist={el} tasks={allTodolistTasks}/>
                 </Grid>
             })
             }

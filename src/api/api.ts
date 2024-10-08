@@ -14,11 +14,15 @@ export const APITodolist = {
     },
     setTodoList(title:string) {
         return instance.post<ResponseType<{ item: TodolistType }>, AxiosResponse<ResponseType<{ item: TodolistType }>>, { title: string }>('todo-lists', {title});
-
     },
     deleteTodoList(id:string) {
         return instance.delete<ResponseType>(`/todo-lists/${id}`);
-
+    },
+    addTasks(todolistId:string,title:string) {
+        return instance.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`,{title})
+    },
+    deleteTasks(todolistId:string,taskid:string) {
+        return instance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskid}`)
     }
 }
 export type TodolistType={
