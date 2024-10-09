@@ -17,7 +17,7 @@ const dispatch=useAppDispatch()
     }
     return <>
              <Grid container>
-           <h3>{props.item.title}</h3>
+           <h3 >{props.item.title}</h3>
            <IconButton aria-label="delete">
                <DeleteIcon id={props.item.id}  onClick={deleteTask}/>
            </IconButton>

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react'
 import {Grid} from "@mui/material";
 import {Todolist} from "./Todolist";
 import {useAppDispatch, useAppSelector} from "../../store";
-import {addTodoListTC, deleteTodolistTC, getTodolistTC} from "./todolist-reducer";
+import {addTodoListTC, deleteTodolistTC, getTodolistTC, updateTitleTodolistTC} from "./todolist-reducer";
 import {AddItemForm} from "../AddItem/AddItem";
 
 
@@ -21,6 +21,10 @@ export const TodoLists : React.FC= () => {
         const thunk = deleteTodolistTC(id)
         dispatch(thunk)
     }, [])
+    const updateTitleTodolist = useCallback(function (todolistId: string,title:string) {
+        dispatch(updateTitleTodolistTC(todolistId,title))
+        console.log(todolistId + title)
+    }, [updateTitleTodolistTC])
     return <>
         <Grid container style={{padding: '20px'}}>
        <AddItemForm addItem={addTodoList} />
@@ -29,7 +33,7 @@ export const TodoLists : React.FC= () => {
             {todolists.map(el => {
                 let allTodolistTasks = tasks[el.id]
                 return <Grid item key={el.id}>
-                        <Todolist removeTodolist={removeTodolist} title={el.title}  todolist={el} tasks={allTodolistTasks}/>
+                        <Todolist updateTitleTodolist={updateTitleTodolist} removeTodolist={removeTodolist} title={el.title}  todolist={el} tasks={allTodolistTasks}/>
                 </Grid>
             })
             }
