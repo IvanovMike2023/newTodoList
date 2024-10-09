@@ -46,14 +46,10 @@ export const Todolist = React.memo(function ({...props}: TodolistType) {
     }
     const onChangeTitleTodo = (e: ChangeEvent<HTMLInputElement>) => {
         setvalue(e.target.value)
-        //dispatch(updateTitleTodolistTC(props.todolist.id,e.target.value))
     }
     const CloseSetTitle = () => {
         setEditableSpan(true)
         dispatch(updateTitleTodolistTC(props.todolist.id,value))
-
-       // props.updateTitleTodolist(props.todolist.id,value)
-
     }
 
     let tasksForTodolist = props.tasks

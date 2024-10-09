@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {UpdateTaskType} from "../Component/Task/task-reducer";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
@@ -26,6 +27,9 @@ export const APITodolist = {
     },
     deleteTasks(todolistId:string,taskid:string) {
         return instance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskid}`)
+    },
+    updateTasksTitle(todolistId: string, taskid: string, model: UpdateTaskType) {
+        return instance.put<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskid}`,model)
     }
 }
 export type TodolistType={
@@ -71,6 +75,7 @@ export type TaskType = {
     order: number
     addedDate: string
 }
+
 export type GetTasksResponse={
     items:TaskType []
     totalCount: number
