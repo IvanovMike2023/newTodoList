@@ -34,7 +34,6 @@ export const Task = React.memo(function ({...props}: ForTaskType) {
         let newIsDoneValue = e.currentTarget.checked
         dispatch(updateTaskTitleTC(props.todolistId, props.item.id, {status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New}))
     };
-    console.log(props.item.status===TaskStatuses.Completed)
     return <>
         <Grid container>
             <Checkbox  checked={props.item.status===TaskStatuses.Completed} onChange={handleChange} />
@@ -43,7 +42,6 @@ export const Task = React.memo(function ({...props}: ForTaskType) {
             <IconButton aria-label="delete">
                 <DeleteIcon id={props.item.id} onClick={deleteTask}/>
             </IconButton>
-
         </Grid>
 
     </>

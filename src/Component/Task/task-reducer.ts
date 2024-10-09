@@ -97,7 +97,6 @@ type ActionsType =
     | ReturnType<typeof deleteTaskAC>
     | ReturnType<typeof updateTaskTitle>
 
-type ThunkDispatch = Dispatch<ActionsType >
 export type UpdateTaskType={
     title?: string
     description?: string
@@ -107,3 +106,5 @@ export type UpdateTaskType={
     startDate?: string
     deadline?: string
 }
+type ThunkDispatch = Dispatch<ActionsType >
+

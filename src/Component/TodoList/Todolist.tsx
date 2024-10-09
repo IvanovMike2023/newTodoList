@@ -1,13 +1,12 @@
-import React, {ChangeEvent, ChangeEventHandler, MouseEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Button, Grid, IconButton, Paper, TextField} from "@mui/material";
-import {deleteTodolistTC, TodolistDomainType, updateTitleTodoList, updateTitleTodolistTC} from "./todolist-reducer";
+import {changeFilterTodolist, TodolistDomainType, updateTitleTodolistTC} from "./todolist-reducer";
 import {AddItemForm} from "../AddItem/AddItem";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {useDispatch, useSelector} from "react-redux";
-import {addTaskTC, getTaskTC, TasksStateType} from "../Task/task-reducer";
+import {addTaskTC, getTaskTC} from "../Task/task-reducer";
 import {Task} from "../Task/Task";
 import {useAppDispatch} from "../../store";
-import {TaskType} from "../../api/api";
+import {TaskStatuses, TaskType} from "../../api/api";
 
 type TodolistType = {
     tasks: TaskType[],
@@ -33,13 +32,16 @@ export const Todolist = React.memo(function ({...props}: TodolistType) {
         props.removeTodolist(props.todolist.id)
     }
     const onCompletedClickHandler = () => {
-        dispatch(getTaskTC(props.todolist.id))
+        dispatch( changeFilterTodolist(props.todolist.id,'completed'))
     }
     const onActiveClickHandler = () => {
-        dispatch(getTaskTC(props.todolist.id))
+        console.log(props.todolist.id)
+       dispatch( changeFilterTodolist(props.todolist.id,'active'))
     }
     const onAllClickHandler = () => {
-        dispatch(getTaskTC(props.todolist.id))
+        console.log(props.todolist.id)
+
+        dispatch( changeFilterTodolist(props.todolist.id,'all'))
     }
     const setTitleTodo = () => {
         setEditableSpan(false)
@@ -53,6 +55,12 @@ export const Todolist = React.memo(function ({...props}: TodolistType) {
     }
 
     let tasksForTodolist = props.tasks
+if(props.todolist.filter==='active'){
+    tasksForTodolist=props.tasks.filter(fl=>fl.status===TaskStatuses.New)
+}
+if(props.todolist.filter==='completed'){
+    tasksForTodolist=props.tasks.filter(fl=>fl.status===TaskStatuses.Completed)
+}
     return <Grid item>
         <Paper style={{padding: '10px'}}>
             <Grid container>
@@ -68,25 +76,19 @@ export const Todolist = React.memo(function ({...props}: TodolistType) {
             </Grid>
             <AddItemForm addItem={addTodoList}/>
             {tasksForTodolist.map(el => <Task key={el.id} todolistId={el.todoListId} item={el}/>)}
-            {/*<Task item={tasksForTodolist}  todolistId={props.todolist.id} />*/}
             <div>
-
-                {/*{tasksForTodolist.map(el=>*/}
-                {/*    <Task key={el.id} title={el.title}/>*/}
-                {/*)}*/}
             </div>
             <div style={{paddingTop: '10px'}}>
-                <Button
+                <Button variant={props.todolist.filter === 'all' ? 'outlined' : 'text'}
                     onClick={onAllClickHandler}
                     color={'inherit'}
                 >All
                 </Button>
-                {/*variant={props.todolist.filter === 'active' ? 'outlined' : 'text'}*/}
-                <Button
+                <Button variant={props.todolist.filter === 'active' ? 'outlined' : 'text'}
                     onClick={onActiveClickHandler}
                     color={'primary'}>Active
                 </Button>
-                <Button
+                <Button variant={props.todolist.filter === 'completed' ? 'outlined' : 'text'}
                     onClick={onCompletedClickHandler}
                     color={'secondary'}>Completed
                 </Button>
