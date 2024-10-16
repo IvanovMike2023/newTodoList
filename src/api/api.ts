@@ -4,7 +4,7 @@ import {UpdateTaskType} from "../Component/Task/task-reducer";
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
     withCredentials: true,
-    headers: {'API-KEY': '28c22174-c814-44e0-8cd0-1256fb0570f4'}
+    headers: {'API-KEY': 'a2bc24bd-0a71-4fa5-ad1c-5b343082cdb6'}
 })
 export const APITodolist = {
     getTodoList() {
